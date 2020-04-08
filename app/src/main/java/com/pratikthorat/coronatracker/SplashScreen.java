@@ -94,7 +94,7 @@ public class SplashScreen extends Activity {
                                 builder.setTitle("Hello, " + text + " !"); // Text is the first word itself.
                             }
                         }
-                        builder.setMessage("I am unable to connect with Sangamner Nagarparishad server, Please cross check your internet connectivity and try again! Closing....")
+                        builder.setMessage("I am unable to connect with fightCovid server, Please cross check your internet connectivity and try again! Closing....")
                                 .setCancelable(false)
                                 .setNegativeButton("CLOSE",
                                         new DialogInterface.OnClickListener() {
