@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:clipToPadding="false"
+    android:paddingLeft="32dp"
+    android:paddingTop="8dp"
+    android:paddingRight="32dp"
+    android:paddingBottom="8dp"
+    tools:context="com.pratikthorat.coronatracker.SplashScreen">
+
+    <!-- <TextView
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:id="@+id/name"
+         android:textSize="20sp"
+         android:elevation="0dp"
+         android:textStyle="bold"
+         android:text="Sangamner Munciple Corporation"
+         android:textColor="@android:color/black"
+         android:layout_marginTop="40dp"
+         android:layout_gravity="center_horizontal"
+         android:layout_centerHorizontal="true"
+         android:textAlignment="center" />-->
+
+    <LinearLayout
+        android:id="@+id/mixname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/author"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="horizontal"
+        android:textAlignment="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="fight"
+            android:textColor="@color/gray"
+            android:textSize="48dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Covid"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="48dp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/customer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/author"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Developed with ❤ for India"
+        android:textAlignment="center"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="4dp"
+        android:text="by Arena of Innovation"
+        android:textAlignment="center"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="14sp" />
+</RelativeLayout>
