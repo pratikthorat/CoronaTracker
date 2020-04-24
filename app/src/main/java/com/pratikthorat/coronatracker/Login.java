@@ -156,7 +156,7 @@ public class Login extends Activity implements LocationListener {
                 if (username.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Please fill mobile number and then try to login!", Toast.LENGTH_LONG).show();
 
-                } else if (token.isEmpty()) {
+                } else if (token == null || token.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Notification token not received! Please try again later or contact developers", Toast.LENGTH_LONG).show();
                 } else {
                     String lng, lat;
