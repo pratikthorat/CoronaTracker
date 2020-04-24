@@ -44,6 +44,7 @@ import java.net.URLEncoder;
 import static android.graphics.Typeface.createFromAsset;
 
 public class ImageUpload extends AppCompatActivity {
+    //Tes Comment
     public static final int REQUEST_CAMERA = 1897;
     private static final int REQUEST_READ_PERMISSION = 786;
     static String str = "";
