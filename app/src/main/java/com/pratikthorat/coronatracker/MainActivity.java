@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         TextView author = findViewById(R.id.author);
         Typeface robotothin = createFromAsset(getAssets(),
                 "fonts/Roboto-Black.ttf"); //use this.getAssets if you are calling from an Activity
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("LoginDetails", MODE_PRIVATE);
-        String userName = pref.getString("userName", null);
+            String userName = pref.getString("userName", null);
         final ActionBar abar = getSupportActionBar();
         View viewActionBar = getLayoutInflater().inflate(R.layout.apply_actionbar, null);
         ActionBar.LayoutParams params = new ActionBar.LayoutParams(//Center the textview in the ActionBar !

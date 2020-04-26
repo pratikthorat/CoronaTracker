@@ -44,7 +44,7 @@ import java.net.URLEncoder;
 import static android.graphics.Typeface.createFromAsset;
 
 public class ImageUpload extends AppCompatActivity {
-    //Tes Comment
+    //Test Comment
     public static final int REQUEST_CAMERA = 1897;
     private static final int REQUEST_READ_PERMISSION = 786;
     static String str = "";
@@ -64,7 +64,7 @@ public class ImageUpload extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.BLACK);
 
         }
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         TextView author = findViewById(R.id.author);
         Typeface robotothin = createFromAsset(getAssets(),
                 "fonts/Roboto-Black.ttf"); //use this.getAssets if you are calling from an Activity

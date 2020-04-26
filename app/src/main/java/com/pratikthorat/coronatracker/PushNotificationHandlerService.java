@@ -30,6 +30,7 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.pratikthorat.coronatracker.Database.CollectorRepository;
+import com.pratikthorat.coronatracker.ui.notification.NotificationFragment;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -432,7 +433,10 @@ public class PushNotificationHandlerService extends FirebaseMessagingService imp
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this.getApplicationContext(), "notify_002");
-        Intent intent = new Intent(this, ListActivity.class);
+
+        Intent intent = new Intent(this, ActivityHome.class);
+        intent.putExtra("isCustomNotification","1");
+
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss aa", Locale.getDefault());
         String time = sdf.format(new Date());

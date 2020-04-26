@@ -16,7 +16,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    MyRecyclerViewAdapter(Context context, List<Notification> data) {
+    public MyRecyclerViewAdapter(Context context, List<Notification> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }

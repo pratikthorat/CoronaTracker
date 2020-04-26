@@ -17,6 +17,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
@@ -58,7 +59,7 @@ public class Login extends Activity implements LocationListener {
 
         }
         super.onCreate(savedInstanceState);
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         Bundle extras = getIntent().getExtras();
         setContentView(R.layout.login);
         loginMessage = findViewById(R.id.loginMessage);
@@ -286,7 +287,19 @@ public class Login extends Activity implements LocationListener {
                     editor.putString("userName", givenUsername);
                     editor.putString("firebaseToken", givenToken);
                     editor.commit();
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
+               /*     NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+                    View headerView = navigationView.getHeaderView(0);
+                    TextView userMobile = (TextView) headerView.findViewById(R.id.mobileNo);
+
+                    String userName ;
+                    userName = pref.getString("userName", null);
+                    if("".equals(userName) || userName==null){
+                        userName="Guest user";
+                    }
+                    userMobile.setText(userName);*/
+
+                    Intent intent = new Intent(getApplicationContext(), ActivityHome.class);
                     intent.putExtra("user", result);
                     startActivity(intent);
                     finish();
