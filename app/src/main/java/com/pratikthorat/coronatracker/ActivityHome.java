@@ -1,48 +1,83 @@
 package com.pratikthorat.coronatracker;
 
 import android.annotation.SuppressLint;
-
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.Menu;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.widget.TextView;
-import android.widget.Toast;
+import com.google.firebase.iid.FirebaseInstanceId;
 
-import com.pratikthorat.coronatracker.ui.home.HomeFragment;
-import com.pratikthorat.coronatracker.ui.notification.NotificationFragment;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 
 public class ActivityHome extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-
+    private static final String TAG = Login.class.getSimpleName();
     private String isCustomNotification="";
     @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        SharedPreferences prefGuest = getApplicationContext().getSharedPreferences("GuestDetails", MODE_PRIVATE);
+        if (prefGuest.getString("androidId", null) == null) {
+            final FirebaseInstanceId instance = FirebaseInstanceId.getInstance();
+            String token = "";
+            if (instance != null) {
+                token = instance.getToken();
+            }
+            if (!(token == null || token.isEmpty())) { //token available
+                String unique_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+                sendPostRequest(unique_id, token);
+            } else {
+                Toast.makeText(getApplicationContext(), "Notification service unavailabe!", Toast.LENGTH_LONG).show();
+            }
+        }
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        final ActionBar abar = getSupportActionBar();
+        View viewActionBar = getLayoutInflater().inflate(R.layout.apply_actionbar, null);
+        ActionBar.LayoutParams params = new ActionBar.LayoutParams(//Center the textview in the ActionBar !
+                ActionBar.LayoutParams.WRAP_CONTENT,
+                ActionBar.LayoutParams.MATCH_PARENT,
+                Gravity.CENTER);
+        TextView textviewTitle = viewActionBar.findViewById(R.id.actionbar_textview);
+        // textviewTitle.setText("Hey SuperHero, " + userName + "!");
+        abar.setCustomView(viewActionBar, params);
+        abar.setDisplayShowCustomEnabled(true);
+        abar.setDisplayShowTitleEnabled(true);
+        //abar.setDisplayHomeAsUpEnabled(true);
+        abar.setBackgroundDrawable(new ColorDrawable(Color.BLACK));
+        //abar.setIcon(R.color.transparent);
+        abar.setHomeButtonEnabled(true);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -56,9 +91,9 @@ public class ActivityHome extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        NavigationView navigationView2 = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView2 = findViewById(R.id.nav_view);
         View headerView = navigationView2.getHeaderView(0);
-        TextView userMobile = (TextView) headerView.findViewById(R.id.mobileNo);
+        TextView userMobile = headerView.findViewById(R.id.mobileNo);
 
 
         isCustomNotification = getIntent().getStringExtra("isCustomNotification");
@@ -121,9 +156,76 @@ public class ActivityHome extends AppCompatActivity {
     public void hideItem()
     {
         NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         Menu nav_Menu = navigationView.getMenu();
         nav_Menu.findItem(R.id.nav_login).setVisible(false);
     }
+
+
+    private void sendPostRequest(final String givenAndroidId, final String givenToken) {
+        class SendPostReqAsyncTask extends AsyncTask<String, Void, String> {
+            @Override
+            protected String doInBackground(String... params) {
+
+                Log.e(TAG, "deviceId: " + givenAndroidId);
+                Log.e(TAG, "TOKEN: " + givenToken);
+                String link = "";
+                try {
+                    link = "http://fightcovid.live/corvis/pages/signupUser";
+                    String data = URLEncoder.encode("userToken", "UTF-8") + "=" + URLEncoder.encode(givenToken, "UTF-8");
+                    data += "&" + URLEncoder.encode("deviceId", "UTF-8") + "=" + URLEncoder.encode(givenAndroidId, "UTF-8");
+
+                    URL url = new URL(link);
+                    URLConnection conn = url.openConnection();
+
+                    conn.setDoOutput(true);
+                    OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+
+                    wr.write(data);
+                    wr.flush();
+
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+                    StringBuilder sb = new StringBuilder();
+                    String line = null;
+
+                    // Read Server Response
+                    while ((line = reader.readLine()) != null) {
+                        sb.append(line);
+                        break;
+                    }
+                    return sb.toString();
+                } catch (Exception e) {
+                    return "Exception: " + e.getMessage();
+                }
+            }
+
+            protected void onPreExecute() {
+
+                Log.i("thread", "Started...");
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
+                Log.e(TAG, result);
+                //  Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                if (result.startsWith("1") || result.toLowerCase().contains("true")) {
+                    SharedPreferences pref = getApplicationContext().getSharedPreferences("GuestDetails", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putString("androidId", givenAndroidId);
+                    editor.putString("firebaseToken", givenToken);
+                    editor.commit();
+                    Toast.makeText(getApplicationContext(), "Notifications are now enabled!", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Notifications disabled!" + result, Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+
+        SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();
+        sendPostReqAsyncTask.execute(givenAndroidId, givenToken);
+    }
+
 
 }

@@ -26,6 +26,8 @@
         <activity
             android:name=".ActivityHome"
             android:label="@string/title_activity_home"
+            android:launchMode="singleInstance"
+            android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".WebWindow"
@@ -57,7 +59,6 @@
             android:screenOrientation="fullSensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
