@@ -64,7 +64,7 @@ public class ImageUpload extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.BLACK);
 
         }
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         TextView author = findViewById(R.id.author);
         Typeface robotothin = createFromAsset(getAssets(),
                 "fonts/Roboto-Black.ttf"); //use this.getAssets if you are calling from an Activity

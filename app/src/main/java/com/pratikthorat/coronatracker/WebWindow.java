@@ -12,7 +12,6 @@ import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class WebWindow extends AppCompatActivity {
@@ -23,7 +22,7 @@ public class WebWindow extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_window);
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         final ActionBar abar = getSupportActionBar();
         View viewActionBar = getLayoutInflater().inflate(R.layout.apply_actionbar, null);
@@ -31,11 +30,11 @@ public class WebWindow extends AppCompatActivity {
                 ActionBar.LayoutParams.WRAP_CONTENT,
                 ActionBar.LayoutParams.MATCH_PARENT,
                 Gravity.CENTER);
-        TextView textviewTitle = viewActionBar.findViewById(R.id.actionbar_textview);
-        textviewTitle.setText("Corona News new you");
+        //TextView textviewTitle = viewActionBar.findViewById(R.id.actionbar_textview);
+        //textviewTitle.setText("Corona News new you");
         abar.setCustomView(viewActionBar, params);
         abar.setDisplayShowCustomEnabled(true);
-        abar.setDisplayShowTitleEnabled(false);
+        abar.setDisplayShowTitleEnabled(true);
         // abar.setDisplayHomeAsUpEnabled(true);
         abar.setBackgroundDrawable(new ColorDrawable(Color.BLACK));
         //abar.setIcon(R.color.transparent);

@@ -36,6 +36,7 @@
             android:textSize="48dp" />
     </LinearLayout>
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,6 +45,39 @@
         android:layout_marginTop="12dp"
         android:layout_marginRight="16dp"
         android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/alert"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            android:showDividers="end">
+
+            <ImageView
+                android:id="@+id/alerticon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:background="@android:color/holo_red_dark"
+                android:padding="5dp"
+                android:src="@android:drawable/ic_dialog_alert" />
+
+            <TextView
+                android:id="@+id/alerttext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/alerticon"
+                android:layout_gravity="center"
+                android:layout_margin="4dp"
+                android:text="Only government registered quarantined citizen will be able to login. Other users will not be able to login and need to use the application as guest user."
+                android:textAlignment="center"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="12sp" />
+
+        </LinearLayout>
 
         <EditText
             android:id="@+id/username_et"

@@ -1,6 +1,5 @@
 package com.pratikthorat.coronatracker.ui.login;
 
-import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,10 +10,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.pratikthorat.coronatracker.ActivityHome;
 import com.pratikthorat.coronatracker.Login;
@@ -37,12 +34,10 @@ public class LoginFragment extends Fragment {
 
         replaceFragment(new HomeFragment());
         ((ActivityHome)getActivity()).hideItem();
-
         Intent i = new Intent(getActivity(), Login.class);
         startActivity(i);
-        ((Activity) getActivity()).overridePendingTransition(0, 0);
 
-
+        getActivity().overridePendingTransition(0, 0);
 
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
@@ -56,7 +51,7 @@ public class LoginFragment extends Fragment {
     }
 
     public void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();;
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.nav_host_fragment, fragment, fragment.toString());
         fragmentTransaction.addToBackStack(fragment.toString());

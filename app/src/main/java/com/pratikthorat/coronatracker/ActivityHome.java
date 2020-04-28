@@ -28,6 +28,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.pratikthorat.coronatracker.Util.WebViewUtility;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -40,13 +41,14 @@ public class ActivityHome extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private static final String TAG = Login.class.getSimpleName();
-    private String isCustomNotification="";
+    private String isCustomNotification = "";
+
     @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         SharedPreferences prefGuest = getApplicationContext().getSharedPreferences("GuestDetails", MODE_PRIVATE);
         if (prefGuest.getString("androidId", null) == null) {
             final FirebaseInstanceId instance = FirebaseInstanceId.getInstance();
@@ -83,8 +85,8 @@ public class ActivityHome extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_protective, R.id.nav_news,R.id.nav_district,R.id.nav_helpline,
-                R.id.nav_notification,R.id.nav_login)
+                R.id.nav_home, R.id.nav_protective, R.id.nav_news, R.id.nav_district, R.id.nav_helpline,
+                R.id.nav_notification, R.id.nav_login)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -97,12 +99,12 @@ public class ActivityHome extends AppCompatActivity {
 
 
         isCustomNotification = getIntent().getStringExtra("isCustomNotification");
-        String userName ;
+        String userName;
         SharedPreferences pref = getApplicationContext().getSharedPreferences("LoginDetails", MODE_PRIVATE);
         userName = pref.getString("userName", null);
-        if("".equals(userName) || userName==null){
-            userName="Guest user";
-        }else{
+        if ("".equals(userName) || userName == null) {
+            userName = "Guest user";
+        } else {
             //Hide login menu
             hideItem();
         }
@@ -142,26 +144,42 @@ public class ActivityHome extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    public String isCustomNotification(){
+    public String isCustomNotification() {
         return isCustomNotification;
     }
 
     public void setActionBarTitle(String title) {
         getSupportActionBar().setTitle(title);
     }
-    public void setCustomNotification(String flag){
-        isCustomNotification=flag;
+
+    public void setCustomNotification(String flag) {
+        isCustomNotification = flag;
     }
 
-    public void hideItem()
-    {
+    public void hideItem() {
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView = findViewById(R.id.nav_view);
         Menu nav_Menu = navigationView.getMenu();
         nav_Menu.findItem(R.id.nav_login).setVisible(false);
     }
 
+    @Override
+    public void onDestroy() {
+        WebViewUtility.destroyDialogBox();
+        super.onDestroy();
+    }
 
+    @Override
+    public void onPause() {
+        WebViewUtility.destroyDialogBox();
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        WebViewUtility.destroyDialogBox();
+        super.onStop();
+    }
     private void sendPostRequest(final String givenAndroidId, final String givenToken) {
         class SendPostReqAsyncTask extends AsyncTask<String, Void, String> {
             @Override
@@ -219,6 +237,11 @@ public class ActivityHome extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Notifications are now enabled!", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "Notifications disabled!" + result, Toast.LENGTH_LONG).show();
+                    SharedPreferences pref = getApplicationContext().getSharedPreferences("GuestDetails", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putString("androidId", givenAndroidId);
+                    editor.putString("firebaseToken", givenToken);
+                    editor.commit();
                 }
             }
         }
@@ -226,6 +249,20 @@ public class ActivityHome extends AppCompatActivity {
         SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();
         sendPostReqAsyncTask.execute(givenAndroidId, givenToken);
     }
+   /* @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.login:
+                Toast.makeText(getApplicationContext(), "Login CLicked!", Toast.LENGTH_LONG).show();
+                Intent i = new Intent(this, Login.class);
+                startActivity(i);
+                finish();
+                return true;
+            default:
+                //Toast.makeText(getApplicationContext(), "Something else CLicked!", Toast.LENGTH_LONG).show();
+                return super.onOptionsItemSelected(item);
+        }
 
+    }*/
 
 }

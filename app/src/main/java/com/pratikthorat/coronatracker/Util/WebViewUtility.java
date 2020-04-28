@@ -12,7 +12,8 @@ import android.widget.Toast;
 
 public class WebViewUtility {
 
-    WebView webView;
+    static ProgressDialog progressDialog = null;
+    static WebView webView;
     public static void startWebView(String url, WebView webView, final Activity activity) {
         webView=webView;
         WebSettings settings = webView.getSettings();
@@ -24,7 +25,8 @@ public class WebViewUtility {
         webView.getSettings().setUseWideViewPort(true);
         webView.getSettings().setLoadWithOverviewMode(true);
 
-        final ProgressDialog progressDialog = new ProgressDialog(activity);
+        progressDialog = new ProgressDialog(activity);
+        progressDialog.setCancelable(false);
         progressDialog.setMessage("Loading...");
         progressDialog.show();
 
@@ -64,5 +66,12 @@ public class WebViewUtility {
 
     private void webViewGoBack(){
         webView.goBack();
+    }
+
+    public static void destroyDialogBox() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+        webView = null;
     }
 }

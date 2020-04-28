@@ -17,7 +17,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
@@ -59,7 +58,7 @@ public class Login extends Activity implements LocationListener {
 
         }
         super.onCreate(savedInstanceState);
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Bundle extras = getIntent().getExtras();
         setContentView(R.layout.login);
         loginMessage = findViewById(R.id.loginMessage);
@@ -242,7 +241,6 @@ public class Login extends Activity implements LocationListener {
                     data += "&" + URLEncoder.encode("userLongitude", "UTF-8") + "=" + URLEncoder.encode(paramLongitude, "UTF-8");
                     data += "&" + URLEncoder.encode("userToken", "UTF-8") + "=" + URLEncoder.encode(paramToken, "UTF-8");
                     data += "&" + URLEncoder.encode("deviceId", "UTF-8") + "=" + URLEncoder.encode(unique_id, "UTF-8");
-
                     URL url = new URL(link);
                     URLConnection conn = url.openConnection();
 
