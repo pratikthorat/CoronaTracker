@@ -16,6 +16,12 @@
             android:id="@+id/nav_protective"
             android:icon="@drawable/ic_protective"
             android:title="@string/menu_protective" />
+
+        <item
+            android:id="@+id/nav_mask"
+            android:icon="@drawable/ic_face"
+            android:title="@string/menu_mask" />
+
         <item
             android:id="@+id/nav_news"
             android:icon="@drawable/ic_news"

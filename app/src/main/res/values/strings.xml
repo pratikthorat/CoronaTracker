@@ -15,6 +15,7 @@
     <string name="menu_helpline">Helpline</string>
     <string name="menu_login">Login</string>
     <string name="menu_notification">Notifications</string>
+    <string name="menu_mask">Face Mask Tips</string>
 
     <string-array name="Planets">
         <item>Sun</item>

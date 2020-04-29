@@ -63,4 +63,10 @@
         android:name="com.pratikthorat.coronatracker.ui.login.LoginFragment"
         android:label="@string/menu_login"
     />
+
+    <fragment
+        android:id="@+id/nav_mask"
+        android:name="com.pratikthorat.coronatracker.ui.faceMask.MaskFragment"
+        android:label="@string/menu_mask"
+        tools:layout="@layout/mask_fragment" />
 </navigation>

@@ -85,7 +85,7 @@ public class ActivityHome extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_protective, R.id.nav_news, R.id.nav_district, R.id.nav_helpline,
+                R.id.nav_home, R.id.nav_protective, R.id.nav_mask, R.id.nav_news, R.id.nav_district, R.id.nav_helpline,
                 R.id.nav_notification, R.id.nav_login)
                 .setDrawerLayout(drawer)
                 .build();
@@ -236,7 +236,7 @@ public class ActivityHome extends AppCompatActivity {
                     editor.commit();
                     Toast.makeText(getApplicationContext(), "Notifications are now enabled!", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Notifications disabled!" + result, Toast.LENGTH_LONG).show();
+                    // Toast.makeText(getApplicationContext(), "Notifications disabled!" + result, Toast.LENGTH_LONG).show();
                     SharedPreferences pref = getApplicationContext().getSharedPreferences("GuestDetails", MODE_PRIVATE);
                     SharedPreferences.Editor editor = pref.edit();
                     editor.putString("androidId", givenAndroidId);
