@@ -58,7 +58,7 @@ public class Login extends Activity implements LocationListener {
 
         }
         super.onCreate(savedInstanceState);
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
         Bundle extras = getIntent().getExtras();
         setContentView(R.layout.login);
         loginMessage = findViewById(R.id.loginMessage);

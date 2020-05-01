@@ -64,7 +64,7 @@ public class ImageUpload extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.BLACK);
 
         }
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
         TextView author = findViewById(R.id.author);
         Typeface robotothin = createFromAsset(getAssets(),
                 "fonts/Roboto-Black.ttf"); //use this.getAssets if you are calling from an Activity
@@ -346,7 +346,7 @@ public class ImageUpload extends AppCompatActivity {
                 //Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
                 if (result.contains("1")) {
                     Toast.makeText(ImageUpload.this, "IMAGE UPLOADED\nThanks You for your \ncooperation and support :)", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), ActivityHome.class);
                     finish();
                     startActivity(intent);
                 } else {

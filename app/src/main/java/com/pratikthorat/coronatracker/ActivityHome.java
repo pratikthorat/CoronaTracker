@@ -48,7 +48,7 @@ public class ActivityHome extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
         SharedPreferences prefGuest = getApplicationContext().getSharedPreferences("GuestDetails", MODE_PRIVATE);
         if (prefGuest.getString("androidId", null) == null) {
             final FirebaseInstanceId instance = FirebaseInstanceId.getInstance();
@@ -60,7 +60,7 @@ public class ActivityHome extends AppCompatActivity {
                 String unique_id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
                 sendPostRequest(unique_id, token);
             } else {
-                Toast.makeText(getApplicationContext(), "Notification service unavailabe!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Notification service unavailable!", Toast.LENGTH_LONG).show();
             }
         }
         Toolbar toolbar = findViewById(R.id.toolbar);
