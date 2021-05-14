@@ -9,24 +9,24 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.pratikthorat.coronatracker.Util.WebViewUtility;
 
@@ -40,7 +40,7 @@ import java.net.URLEncoder;
 public class ActivityHome extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    private static final String TAG = Login.class.getSimpleName();
+    private static final String TAG = ActivityHome.class.getSimpleName();
     private String isCustomNotification = "";
 
     @SuppressLint("ResourceType")
@@ -49,6 +49,7 @@ public class ActivityHome extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+
         SharedPreferences prefGuest = getApplicationContext().getSharedPreferences("GuestDetails", MODE_PRIVATE);
         if (prefGuest.getString("androidId", null) == null) {
             final FirebaseInstanceId instance = FirebaseInstanceId.getInstance();
@@ -86,7 +87,7 @@ public class ActivityHome extends AppCompatActivity {
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_protective, R.id.nav_mask, R.id.nav_news, R.id.nav_district, R.id.nav_helpline,
-                R.id.nav_notification, R.id.nav_login)
+                R.id.nav_notification, R.id.nav_login, R.id.nav_support)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -103,30 +104,12 @@ public class ActivityHome extends AppCompatActivity {
         SharedPreferences pref = getApplicationContext().getSharedPreferences("LoginDetails", MODE_PRIVATE);
         userName = pref.getString("userName", null);
         if ("".equals(userName) || userName == null) {
-            userName = "Guest user";
+            userName = "Covid Yodha";
         } else {
             //Hide login menu
             hideItem();
         }
         userMobile.setText(userName);
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                String[] recipients = {"support@fightcovid.live"};//Add multiple recipients here
-                intent.putExtra(Intent.EXTRA_EMAIL, recipients);
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Feedback of fightCOVID application"); //Add Mail Subject
-                intent.putExtra(Intent.EXTRA_TEXT, "Hi Team," +
-                        "");//Add mail body
-                //intent.putExtra(Intent.EXTRA_CC, "mailcc@gmail.com");//Add CC emailid's if any
-                intent.putExtra(Intent.EXTRA_BCC, "pratik.thorat7@gmail.com");//Add BCC email id if any
-                intent.setType("text/html");
-                intent.setPackage("com.google.android.gm");//Added Gmail Package to forcefully open Gmail App
-                startActivity(Intent.createChooser(intent, "Send mail"));
-            }
-        });
 
     }
 
@@ -180,6 +163,7 @@ public class ActivityHome extends AppCompatActivity {
         WebViewUtility.destroyDialogBox();
         super.onStop();
     }
+
     private void sendPostRequest(final String givenAndroidId, final String givenToken) {
         class SendPostReqAsyncTask extends AsyncTask<String, Void, String> {
             @Override
@@ -249,13 +233,22 @@ public class ActivityHome extends AppCompatActivity {
         SendPostReqAsyncTask sendPostReqAsyncTask = new SendPostReqAsyncTask();
         sendPostReqAsyncTask.execute(givenAndroidId, givenToken);
     }
-   /* @Override
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.login:
-                Toast.makeText(getApplicationContext(), "Login CLicked!", Toast.LENGTH_LONG).show();
-                Intent i = new Intent(this, Login.class);
-                startActivity(i);
+            case R.id.nav_support:
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                String[] recipients = {"support@fightcovid.live"};//Add multiple recipients here
+                intent.putExtra(Intent.EXTRA_EMAIL, recipients);
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Feedback of fightCOVID application"); //Add Mail Subject
+                intent.putExtra(Intent.EXTRA_TEXT, "Hi Team," +
+                        "");//Add mail body
+                //intent.putExtra(Intent.EXTRA_CC, "mailcc@gmail.com");//Add CC emailid's if any
+                intent.putExtra(Intent.EXTRA_BCC, "pratik.thorat7@gmail.com");//Add BCC email id if any
+                intent.setType("text/html");
+                intent.setPackage("com.google.android.gm");//Added Gmail Package to forcefully open Gmail App
+                startActivity(Intent.createChooser(intent, "Send mail"));
                 finish();
                 return true;
             default:
@@ -263,6 +256,6 @@ public class ActivityHome extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
 
-    }*/
+    }
 
 }

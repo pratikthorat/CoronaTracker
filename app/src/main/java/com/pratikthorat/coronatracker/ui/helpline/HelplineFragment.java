@@ -1,18 +1,21 @@
 package com.pratikthorat.coronatracker.ui.helpline;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.pratikthorat.coronatracker.R;
 import com.pratikthorat.coronatracker.Util.WebViewUtility;
-import com.pratikthorat.coronatracker.ui.district.DistrictViewModel;
 
 public class HelplineFragment extends Fragment {
 
@@ -28,9 +31,15 @@ public class HelplineFragment extends Fragment {
         mViewModel =
                 ViewModelProviders.of(this).get(HelplineViewModel.class);
         View root = inflater.inflate(R.layout.helpline_fragment, container, false);
+        AdView adView = root.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
         webView = root.findViewById(R.id.webViewHelpline);
-        WebViewUtility.startWebView("http://fightcovid.live/corvis/pages/helplinenumbers",webView,getActivity());
-        return root;    }
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        WebViewUtility.startWebView("http://fightcovid.live/corvis/pages/helplinenumbers", webView, getActivity());
+        return root;
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

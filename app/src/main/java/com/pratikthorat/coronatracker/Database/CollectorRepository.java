@@ -1,16 +1,17 @@
 package com.pratikthorat.coronatracker.Database;
 
-import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.os.AsyncTask;
+
+import androidx.room.Room;
 
 import java.util.List;
 
 
 public class CollectorRepository {
-    private String DB_NAME = "db_record";
+    private final String DB_NAME = "db_record";
 
-    private CollectorDatabase collectorDatabase;
+    private final CollectorDatabase collectorDatabase;
 
     public CollectorRepository(Context context) {
         collectorDatabase = Room.databaseBuilder(context, CollectorDatabase.class, DB_NAME).build();

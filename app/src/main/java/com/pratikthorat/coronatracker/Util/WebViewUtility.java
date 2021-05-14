@@ -53,13 +53,14 @@ public class WebViewUtility {
         webView.loadUrl(url);
     }
 
-    private Handler handler = new Handler(){
+    private final Handler handler = new Handler() {
         @Override
         public void handleMessage(Message message) {
             switch (message.what) {
-                case 1:{
+                case 1: {
                     webViewGoBack();
-                }break;
+                }
+                break;
             }
         }
     };

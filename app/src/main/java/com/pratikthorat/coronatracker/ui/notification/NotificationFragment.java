@@ -1,21 +1,21 @@
 package com.pratikthorat.coronatracker.ui.notification;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.pratikthorat.coronatracker.Database.Collector;
 import com.pratikthorat.coronatracker.Database.CollectorRepository;
 import com.pratikthorat.coronatracker.MyRecyclerViewAdapter;
@@ -33,13 +33,15 @@ public class NotificationFragment extends Fragment {
         notificationViewModel =
                 ViewModelProviders.of(this).get(NotificationViewModel.class);
         View root = inflater.inflate(R.layout.notification_fragment, container, false);
-
+        AdView adView = root.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
         ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.Planets, android.R.layout.simple_list_item_1);
         RecyclerView recyclerView = root.findViewById(R.id.notificationList);
-        TextView noNotificationLabel=root.findViewById(R.id.noNotf);
+        TextView noNotificationLabel = root.findViewById(R.id.noNotf);
 
-       populateList(recyclerView,noNotificationLabel);
+        populateList(recyclerView, noNotificationLabel);
         return root;
     }
 
@@ -50,8 +52,9 @@ public class NotificationFragment extends Fragment {
                 CollectorRepository collectorRepository = new CollectorRepository(getActivity());
                 return collectorRepository.getAllRecords();
             }
+
             MyRecyclerViewAdapter adapter;
-            ArrayList<Notification> notice = new ArrayList<>();
+            final ArrayList<Notification> notice = new ArrayList<>();
             @Override
             protected void onPostExecute(List<Collector> collectors) {
                 for (Collector col : collectors) {

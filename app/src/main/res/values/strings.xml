@@ -16,7 +16,9 @@
     <string name="menu_login">Login</string>
     <string name="menu_notification">Notifications</string>
     <string name="menu_mask">Face Mask Tips</string>
-
+    <string name="menu_support">Face Mask Tips</string>
+    <string name="ads_1">ca-app-pub-5811629991681115/4267998630</string>
+    <!--ca-app-pub-3940256099942544/6300978111 for testing-->
     <string-array name="Planets">
         <item>Sun</item>
         <item>Mercury</item>

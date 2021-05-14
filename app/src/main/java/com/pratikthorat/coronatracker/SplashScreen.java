@@ -13,11 +13,15 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
+
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.pratikthorat.coronatracker.Util.AppStatus;
 
 import static android.graphics.Typeface.createFromAsset;
@@ -26,17 +30,24 @@ public class SplashScreen extends Activity {
     public static final int ACCESS_NETWORK_STATE = 1797;
     private static final String TAG = "error";
     public static int flag = 0;
-    private static int SPLASH_TIME_OUT = 4000;
+    private static final int SPLASH_TIME_OUT = 4000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
         if (ActivityCompat.checkSelfPermission(SplashScreen.this, Manifest.permission.ACCESS_NETWORK_STATE)
                 != PackageManager.PERMISSION_GRANTED) {
             // Check Permissions Now
-            // Callback onRequestPermissionsResult interceptado na Activity MainActivity
+            // Callback onRequestPermissionsResult intercept na Activity MainActivity
             ActivityCompat.requestPermissions(SplashScreen.this,
                     new String[]{Manifest.permission.ACCESS_NETWORK_STATE},
                     SplashScreen.ACCESS_NETWORK_STATE);
